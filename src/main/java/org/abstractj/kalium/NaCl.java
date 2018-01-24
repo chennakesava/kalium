@@ -372,6 +372,61 @@ public class NaCl {
                 @In @u_int64_t int passwdlen);
 
         // ---------------------------------------------------------------------
+        // Argon2
+
+        int CRYPTO_PWHASH_STRBYTES = 120;
+
+        int CRYPTO_PWHASH_ARGON2ID_SALTBYTES = 16;
+
+        int CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE = 2;
+
+        int CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE = 67108864;
+
+        int CRYPTO_PWHASH_ARGON2I_ALG_ARGON2I13 = 1;
+
+        int CRYPTO_PWHASH_ARGON2ID_ALG_ARGON2ID13 = 2;
+
+        int CRYPTO_PWHASH_ALG_DEFAULT = CRYPTO_PWHASH_ARGON2ID_ALG_ARGON2ID13;
+
+        int crypto_pwhash_argon2id_saltbytes();
+
+        int crypto_pwhash(
+                @Out byte[] out, @In @u_int64_t int outlen,
+                @In byte[] passwd, @In @u_int64_t int passwdlen,
+                @In byte[] salt,
+                @In @u_int64_t long opslimit, @In @u_int64_t long memlimit,
+                @In @u_int64_t int alg);
+
+        int crypto_pwhash_str_alg(
+                @Out byte[] out,
+                @In byte[] passwd, @In @u_int64_t long passwdlen,
+                @In @u_int64_t long opslimit, @In @u_int64_t long memlimit, @In @u_int64_t int alg);
+
+
+        int crypto_pwhash_str_verify(
+                @In byte[] buffer,
+                @In byte[] passwd,
+                @In @u_int64_t int passwdlen);
+
+        int argon2id_hash_raw(
+                @In @u_int64_t long opslimit,  @In @u_int64_t long memlimit,
+                @In @u_int64_t long parallelism, @In byte[] passwd,
+                @In @u_int64_t int passwdlen, @In byte[] salt,
+                @In @u_int64_t int saltlen, @Out byte[] out, @In @u_int64_t int outlen);
+
+//        int argon2id_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
+//                      const uint32_t parallelism, const void *pwd,
+//                      const size_t pwdlen, const void *salt,
+//                      const size_t saltlen, void *hash, const size_t hashlen);
+
+//        unsigned char *const out --> @Out byte[] buffer
+//        unsigned long long outlen -->  @In @u_int64_t int outlen
+//        const unsigned char *const salt --> @In byte[] salt
+//        unsigned long long opslimit, size_t memlimit --> @In @u_int64_t long opslimit, @In @u_int64_t long memlimit
+
+//        int argon2id_verify(const char *encoded, const void *pwd, const size_t pwdlen);
+
+        // ---------------------------------------------------------------------
         // Advanced: AES256-GCM
 
         int CRYPTO_AEAD_AES256GCM_KEYBYTES = 32;
